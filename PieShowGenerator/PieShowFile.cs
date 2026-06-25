@@ -4,14 +4,12 @@ using Emgu.CV.Structure;
 
 namespace PieShowGenerator
 {
-    class PieShowFile(uint songID, uint songStartTimeMillis, uint bpm, uint fps, PieShowFile.ScalingMethod scalingMethod)
+    class PieShowFile(uint songID, uint songStartTimeMillis, uint fps)
     {
         public Color[,]? Frames { get; set; } = null;
         public uint SongID { get; } = songID;
         public uint SongStartTime { get; } = songStartTimeMillis;
-        public uint BPM { get; } = bpm;
         public uint FPS { get; } = fps;
-        public ScalingMethod ScaleMethod { get; } = scalingMethod;
 
         /// <summary>
         /// PieShowFile v1
@@ -24,7 +22,7 @@ namespace PieShowGenerator
         /// [][][][] #frames per second
         /// [][][][] #song id
         /// [][][][] #song start time (milliseconds)
-        /// [][][][] #scaling method
+        /// [][][][] #unused
         /// [][][][] #unused
         /// [][][][] #unused
         /// [R][G][B][R][G][B]... #frame 1
@@ -57,7 +55,6 @@ namespace PieShowGenerator
             pushPreamble(FPS);
             pushPreamble(SongID);
             pushPreamble(SongStartTime);
-            pushPreamble((uint)(int)ScaleMethod);
 
             for (uint f = 0; f < framesLen; f++)
             {
@@ -80,7 +77,9 @@ namespace PieShowGenerator
                 {
                     capture.Retrieve(mat);
                     Image<Rgb, byte> frame = mat.ToImage<Rgb, byte>();
-                    frame[2,2]
+
+                    Console.WriteLine(frame.Width + " x " + frame.Height);
+                    Console.WriteLine(frame[frame.Height / 2 - 100, frame.Width / 2].ToString());
                 }
             }
         }

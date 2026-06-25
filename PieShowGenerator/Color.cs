@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace PieShowGenerator
 {
-    public struct Color
+    public struct Color(byte r, byte g, byte b)
     {
-        public byte R, G, B;
+        public byte R = r, G = g, B = b;
     }
 }
